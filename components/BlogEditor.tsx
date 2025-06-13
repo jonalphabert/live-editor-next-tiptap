@@ -2,28 +2,14 @@
 
 import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Image from "@tiptap/extension-image";
-import Heading from "@tiptap/extension-heading";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Placeholder from "@tiptap/extension-placeholder";
-import Underline from "@tiptap/extension-underline";
-import { all, createLowlight } from "lowlight";
-import css from "highlight.js/lib/languages/css";
-import js from "highlight.js/lib/languages/javascript";
-import ts from "highlight.js/lib/languages/typescript";
-import html from "highlight.js/lib/languages/xml";
 import { useState, useCallback, useRef } from "react";
 import { useModalStore } from "@/store/BlogCreate";
 import { Bold, CodeXml, Heading1, Heading2, Heading3, Heading4, Heading5, ImageUp, Italic, LucideList, LucideListOrdered, LucideUnderline, LucideLink } from "lucide-react";
-import Link from "@tiptap/extension-link";
-
-const lowlight = createLowlight(all);
-
-// Register languages for syntax highlighting
-lowlight.register("html", html);
-lowlight.register("css", css);
-lowlight.register("js", js);
-lowlight.register("ts", ts);
+import {underlineConfiguration,
+  imageConfiguration,
+  codeBlockConfiguration,
+  headingExtensions } from "@/utils/editor-setup";
 
 type TiptapProps = {
   className?: string;
@@ -88,98 +74,13 @@ const TiptapEditor = ({
         HTMLAttributes: { class: "bg-gray-800 text-white px-1 rounded" },
         },
       }),
-      Heading.extend({
-        name: "heading",
-        levels: [1],
-        addAttributes() {
-          return {
-            level: {
-              default: 1,
-            },
-            class: {
-              default: "heading-blog",
-            },
-          };
-        },
-      }),
-      Heading.extend({
-        name: "heading",
-        levels: [2],
-        addAttributes() {
-          return {
-            level: {
-              default: 2,
-            },
-            class: {
-              default: "heading-blog",
-            },
-          };
-        },
-      }),
-      Heading.extend({
-        name: "heading",
-        levels: [3],
-        addAttributes() {
-          return {
-            level: {
-              default: 3,
-            },
-            class: {
-              default: "heading-blog",
-            },
-          };
-        },
-      }),
-      Heading.extend({
-        name: "heading",
-        levels: [4],
-        addAttributes() {
-          return {
-            level: {
-              default: 4,
-            },
-            class: {
-              default: "heading-blog",
-            },
-          };
-        },
-      }),
-      Heading.extend({
-        name: "heading",
-        levels: [5],
-        addAttributes() {
-          return {
-            level: {
-              default: 5,
-            },
-            class: {
-              default: "heading-blog",
-            },
-          };
-        },
-      }),
-      
-      Image.configure({
-        inline: true,
-        allowBase64: false,
-        HTMLAttributes: {
-          class: "rounded-lg my-4",
-        },
-      }),
-      CodeBlockLowlight.configure({
-        lowlight,
-        HTMLAttributes: {
-          class: "bg-gray-800 text-gray-100 p-4 rounded-lg my-4",
-        },
-      }),
       Placeholder.configure({
         placeholder,
       }),
-      Underline.configure({
-        HTMLAttributes: {
-          class: "underline",
-        },
-      }),
+      underlineConfiguration,
+      imageConfiguration,
+      codeBlockConfiguration,
+      ...headingExtensions,
     ],
     content,
     onUpdate: ({ editor }) => {
@@ -295,7 +196,6 @@ const TiptapEditor = ({
       />
      
       
-      {/* Editor toolbar */}
       <div className="border-b border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800 flex flex-wrap gap-2">
         <button
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
@@ -502,7 +402,6 @@ const TiptapEditor = ({
         </BubbleMenu>
       )}
 
-      {/* Editor content with Medium-like styling */}
       <div className="p-6">
         <EditorContent 
           editor={editor} 
