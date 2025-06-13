@@ -145,6 +145,18 @@
   margin: 1rem 0;
 }
 
+.heading-blog[level="4"] {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
+  margin: 0.75rem 0;
+}
+
+.heading-blog[level="5"] {
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+  margin: 0.5rem 0;
+}
+
 .font-outfit {
   font-family: var(--font-outfit);
 }
