@@ -6,6 +6,7 @@ import Image from "@tiptap/extension-image";
 import Heading from "@tiptap/extension-heading";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Placeholder from "@tiptap/extension-placeholder";
+import Underline from "@tiptap/extension-underline";
 import { all, createLowlight } from "lowlight";
 import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
@@ -13,6 +14,8 @@ import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import { useState, useCallback, useRef } from "react";
 import { useModalStore } from "@/store/BlogCreate";
+import { Bold, CodeXml, Heading1, Heading2, Heading3, Heading4, Heading5, ImageUp, Italic, LucideList, LucideListOrdered, LucideUnderline, LucideLink } from "lucide-react";
+import Link from "@tiptap/extension-link";
 
 const lowlight = createLowlight(all);
 
@@ -46,8 +49,6 @@ const TiptapEditor = ({
       // Simulate upload delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // In a real app, you would upload the file to your server or cloud storage
-      // For demo purposes, we'll use a blob URL
       const url = URL.createObjectURL(file);
       return url;
     } catch (error) {
@@ -144,6 +145,73 @@ const TiptapEditor = ({
       }),
       Placeholder.configure({
         placeholder,
+      }),
+      Underline.configure({
+        HTMLAttributes: {
+          class: "underline",
+        },
+      }),
+      Link.configure({
+        HTMLAttributes: {
+          class: "underline blue-500",
+        },
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: 'https',
+        protocols: ['http', 'https'],
+        isAllowedUri: (url, ctx) => {
+          try {
+            // construct URL
+            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`${ctx.defaultProtocol}://${url}`)
+
+            // use default validation
+            if (!ctx.defaultValidate(parsedUrl.href)) {
+              return false
+            }
+
+            // disallowed protocols
+            const disallowedProtocols = ['ftp', 'file', 'mailto']
+            const protocol = parsedUrl.protocol.replace(':', '')
+
+            if (disallowedProtocols.includes(protocol)) {
+              return false
+            }
+
+            // only allow protocols specified in ctx.protocols
+            const allowedProtocols = ctx.protocols.map(p => (typeof p === 'string' ? p : p.scheme))
+
+            if (!allowedProtocols.includes(protocol)) {
+              return false
+            }
+
+            // disallowed domains
+            const disallowedDomains = ['example-phishing.com', 'malicious-site.net']
+            const domain = parsedUrl.hostname
+
+            if (disallowedDomains.includes(domain)) {
+              return false
+            }
+
+            // all checks have passed
+            return true
+          } catch {
+            return false
+          }
+        },
+        shouldAutoLink: url => {
+          try {
+            // construct URL
+            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`https://${url}`)
+
+            // only auto-link if the domain is not in the disallowed list
+            const disallowedDomains = ['example-no-autolink.com', 'another-no-autolink.com']
+            const domain = parsedUrl.hostname
+
+            return !disallowedDomains.includes(domain)
+          } catch {
+            return false
+          }
+        },
       }),
     ],
     content,
@@ -245,6 +313,34 @@ const TiptapEditor = ({
     [editor, handleImageUpload]
   );
 
+  const setLink = useCallback(() => {
+    if (!editor) return;
+
+    const previousUrl = editor.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
+
+    // cancelled
+    if (url === null) {
+      return
+    }
+
+    // empty
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink()
+        .run()
+
+      return
+    }
+
+    // update link
+    try {
+      editor.chain().focus().extendMarkRange('link').setLink({ href: url })
+        .run()
+    } catch (e) {
+      alert("Invalid URL")
+    }
+  }, [editor])
+
   if (!editor) {
     return <div className="text-gray-500 p-4">Loading editor...</div>;
   }
@@ -271,7 +367,7 @@ const TiptapEditor = ({
           }`}
           title="Heading 1"
         >
-          <span className="font-bold text-xl">H1</span>
+          <Heading1 />
         </button>
         
         <button
@@ -283,7 +379,7 @@ const TiptapEditor = ({
           }`}
           title="Heading 2"
         >
-          <span className="font-bold text-lg">H2</span>
+          <Heading2 />
         </button>
         
         <button
@@ -295,7 +391,31 @@ const TiptapEditor = ({
           }`}
           title="Heading 3"
         >
-          <span className="font-bold">H3</span>
+          <Heading3 />
+        </button>
+
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+          className={`p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
+            editor.isActive("heading", { level: 4 })
+              ? "bg-gray-200 dark:bg-gray-700 text-blue-600"
+              : "text-gray-700 dark:text-gray-300"
+          }`}
+          title="Heading 4"
+        >
+          <Heading4 />
+        </button>
+
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
+          className={`p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
+            editor.isActive("heading", { level: 5 })
+              ? "bg-gray-200 dark:bg-gray-700 text-blue-600"
+              : "text-gray-700 dark:text-gray-300"
+          }`}
+          title="Heading 5"
+        >
+          <Heading5 />
         </button>
         
         <div className="h-6 border-l border-gray-300 dark:border-gray-600 mx-1"></div>
@@ -309,7 +429,7 @@ const TiptapEditor = ({
           }`}
           title="Bold"
         >
-          <span className="font-bold">B</span>
+          <Bold />
         </button>
         
         <button
@@ -321,7 +441,19 @@ const TiptapEditor = ({
           }`}
           title="Italic"
         >
-          <span className="italic">I</span>
+          <Italic />
+        </button>
+
+        <button
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          className={`p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
+            editor.isActive("underline")
+              ? "bg-gray-200 dark:bg-gray-700 text-blue-600"
+              : "text-gray-700 dark:text-gray-300"
+          }`}
+          title="Underline"
+        >
+          <LucideUnderline />
         </button>
         
         <button
@@ -347,9 +479,7 @@ const TiptapEditor = ({
           }`}
           title="Bullet List"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M5 4a1 1 0 00-1 1v1a1 1 0 001 1h1a1 1 0 001-1V5a1 1 0 00-1-1H5zm0 5a1 1 0 00-1 1v1a1 1 0 001 1h1a1 1 0 001-1v-1a1 1 0 00-1-1H5zm0 5a1 1 0 00-1 1v1a1 1 0 001 1h1a1 1 0 001-1v-1a1 1 0 00-1-1H5zm10-8a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm0 5a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm0 5a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1z" clipRule="evenodd" />
-          </svg>
+          <LucideList />
         </button>
         
         <button
@@ -361,10 +491,7 @@ const TiptapEditor = ({
           }`}
           title="Ordered List"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M5 4a1 1 0 00-1 1v1a1 1 0 001 1h1a1 1 0 001-1V5a1 1 0 00-1-1H5zm0 5a1 1 0 00-1 1v1a1 1 0 001 1h1a1 1 0 001-1v-1a1 1 0 00-1-1H5zm0 5a1 1 0 00-1 1v1a1 1 0 001 1h1a1 1 0 001-1v-1a1 1 0 00-1-1H5zm10-8a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm0 5a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm0 5a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1z" clipRule="evenodd" />
-            <path d="M9 5h6v2H9V5zm0 5h6v2H9v-2zm0 5h6v2H9v-2z" />
-          </svg>
+          <LucideListOrdered />
         </button>
         
         <button
@@ -376,9 +503,19 @@ const TiptapEditor = ({
           }`}
           title="Code Block"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-          </svg>
+          <CodeXml />
+        </button>
+
+        <button
+          onClick={setLink}
+          className={`p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
+            editor.isActive("codeBlock")
+              ? "bg-gray-200 dark:bg-gray-700 text-blue-600"
+              : "text-gray-700 dark:text-gray-300"
+          }`}
+          title="Link"
+        >
+          <LucideLink />
         </button>
         
         <button
@@ -394,9 +531,7 @@ const TiptapEditor = ({
           {isImageUploading ? (
             <span className="animate-pulse">Uploading...</span>
           ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-            </svg>
+            <ImageUp />
           )}
         </button>
       </div>
