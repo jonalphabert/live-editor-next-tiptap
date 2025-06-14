@@ -186,7 +186,7 @@ const TiptapEditor = ({
   }
 
   return (
-    <div className="w-full mx-auto bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden">
+    <div className="w-full mx-auto bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden">
       <input
         type="file"
         ref={fileInputRef}

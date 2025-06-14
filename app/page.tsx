@@ -1,40 +1,30 @@
-// app/page.tsx
-'use client'
-
-import { useState } from 'react'
-import { Sun, Moon } from 'lucide-react'
+import ThemeToggle from '@/components/theme/ThemeButton'
+import Link from 'next/link'
 
 export default function HomePage() {
-  const [dark, setDark] = useState(false)
 
   return (
-    <main className={dark ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}>
-      <div className="max-w-5xl mx-auto px-4 py-12 min-h-screen">
-        {/* Header */}
+    <main className={'dark:bg-gray-900 dark:text-white bg-white text-gray-900'}>
+      <div className="container mx-auto px-4 py-12 min-h-screen">
+
         <div className="flex justify-between items-center mb-12">
           <h1 className="text-2xl font-bold">OpenEditor</h1>
-          <button
-            onClick={() => setDark(!dark)}
-            className="p-2 rounded-md border hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-          >
-            {dark ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+          <ThemeToggle />
         </div>
 
-        {/* Hero */}
         <section className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
-            A Clean, Powerful Online Editor — Open Source
+            A Clean, Powerful Online Editor
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
             Built with Tiptap & Next.js for writing anything beautifully.
           </p>
           <div className="flex justify-center gap-4">
-            <a href="/editor" className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+            <Link href="/editor" className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
               Start Writing
-            </a>
+            </Link>
             <a
-              href="https://github.com/your-repo"
+              href="https://github.com/jonalphabert/live-editor-next-tiptap"
               target="_blank"
               className="px-6 py-3 border rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800"
             >
@@ -72,21 +62,6 @@ export default function HomePage() {
             className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700"
           >
             Open Editor
-          </a>
-        </section>
-
-        {/* Open Source */}
-        <section className="text-center mb-16">
-          <h3 className="text-2xl font-bold mb-4">Open Source & Developer Friendly</h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-4 max-w-xl mx-auto">
-            OpenEditor is fully open source. Clone it, customize it, or contribute to make it better.
-          </p>
-          <a
-            href="https://github.com/your-repo"
-            target="_blank"
-            className="px-6 py-3 border rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800"
-          >
-            Contribute on GitHub
           </a>
         </section>
 
