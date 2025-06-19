@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Geist, Outfit } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/theme/ThemeProvider";
+import { Navbar } from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Outfit({
+const outfitSans = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
 });
@@ -26,10 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-gray-900 dark:text-white bg-white text-gray-900`}
+        className={`${geistSans.variable} ${outfitSans.variable} antialiased dark:bg-gray-950 dark:text-white bg-white text-gray-900 relative font-outfit`}
       >
        <ThemeProvider>
-          {/* Your layout structure */}
+          <Navbar/>
           {children}
         </ThemeProvider>
       </body>
