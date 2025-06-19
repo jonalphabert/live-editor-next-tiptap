@@ -14,6 +14,8 @@ import {underlineConfiguration,
   imageConfiguration,
   codeBlockConfiguration,
   headingExtensions } from "@/utils/editor-setup";
+import Highlight from "@tiptap/extension-highlight";
+
 
 type TiptapProps = {
   className?: string;
@@ -81,6 +83,7 @@ const TiptapEditor = ({
       Placeholder.configure({
         placeholder,
       }),
+      Highlight,
       underlineConfiguration,
       imageConfiguration,
       codeBlockConfiguration,
@@ -215,7 +218,7 @@ const TiptapEditor = ({
   }
 
   return (
-    <div className="w-full mx-auto bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden">
+    <div className="bg-white dark:bg-gray-700 w-full h-[80vh] overflow-y-auto rounded-xl shadow-lg relative">
       <input
         type="file"
         ref={fileInputRef}
@@ -225,7 +228,7 @@ const TiptapEditor = ({
       />
      
       
-      <div className="border-b border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800 flex flex-wrap gap-2">
+      <div className="sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700 p-3 bg-gray-50 dark:bg-gray-800 flex flex-wrap gap-2">
         <button
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           className={`p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
@@ -450,7 +453,7 @@ const TiptapEditor = ({
                     prose-ol:list-decimal prose-ol:pl-6
                     prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
                     prose-img:rounded-lg prose-img:shadow-md
-                    focus:outline-none min-h-[300px]"
+                    focus:outline-none"
         />
       </div>
     </div>
