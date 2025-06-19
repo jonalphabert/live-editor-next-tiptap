@@ -5,7 +5,11 @@ import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import { useState, useCallback, useRef } from "react";
 import { useModalStore } from "@/store/BlogCreate";
-import { Bold, CodeXml, Heading1, Heading2, Heading3, Heading4, Heading5, ImageUp, Italic, LucideList, LucideListOrdered, LucideUnderline, LucideLink } from "lucide-react";
+import { 
+  Bold, CodeXml, Heading1, Heading2, Heading3, Heading4, Heading5, 
+  ImageUp, Italic, LucideList, LucideListOrdered, LucideUnderline, 
+  LucideLink, Link as LinkIcon // Added LinkIcon for clarity
+} from "lucide-react";
 import {underlineConfiguration,
   imageConfiguration,
   codeBlockConfiguration,
@@ -53,7 +57,7 @@ const TiptapEditor = ({
             HTMLAttributes: { class: "heading-blog" },
         },
         paragraph: {
-            HTMLAttributes: { class: "mb-2 font-lato text-lg" },
+            HTMLAttributes: { class: "mb-2 font-lato text-lg flex gap-2 items-center justify-start" },
         },
         bulletList: {
             HTMLAttributes: { class: "list-disc font-lato ms-6" },
@@ -180,6 +184,31 @@ const TiptapEditor = ({
     },
     [editor, handleImageUpload]
   );
+
+  const addImageByUrl = useCallback(() => {
+    const url = window.prompt('Enter image URL');
+    
+    if (url && editor) {
+      // // Basic URL validation
+      // if (!url.match(/\.(jpeg|jpg|gif|png|webp)$/)) {
+      //   alert('Please enter a valid image URL (jpg, png, gif, webp)');
+      //   return;
+      // }
+      
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "image",
+          attrs: {
+            src: url,
+            alt: "Inserted image",
+            title: "Inserted image",
+          },
+        })
+        .run();
+    }
+  }, [editor]);
 
   if (!editor) {
     return <div className="text-gray-500 p-4">Loading editor...</div>;
@@ -343,6 +372,14 @@ const TiptapEditor = ({
           title="Code Block"
         >
           <CodeXml />
+        </button>
+
+        <button
+          onClick={addImageByUrl}
+          className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+          title="Insert Image by URL"
+        >
+          <LucideLink /> {/* Use link icon for URL insertion */}
         </button>
         
         <button
