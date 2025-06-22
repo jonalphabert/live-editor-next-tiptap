@@ -1,15 +1,22 @@
+import GlassEditor from '@/components/AnimationEditor';
 import { Navbar } from '@/components/Navbar'
-import ThemeToggle from '@/components/theme/ThemeButton'
 import { EyeIcon, LayoutDashboardIcon, UploadCloudIcon } from 'lucide-react'
 import Link from 'next/link'
 
 export default function HomePage() {
 
+  const exampleCode = 
+`# Welcome to OpenEditor!
+
+This is a **sample** code block. You can write **Markdown** here.
+
+This editor **formats markdown in real-time** as you type! Here are some features:
+`;
+
   return (
     <div className="px-4">
 
       <Navbar/>
-
 
       <main>
         <div className="container mx-auto px-4 py-12 min-h-screen">
@@ -21,7 +28,7 @@ export default function HomePage() {
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
             A lightning-fast editor that understands GitHub's markdown flavor. Write documentation, profile bios, and project READMEs with confidence—seeing exactly how they'll appear on GitHub as you type. No more guesswork, just polished content.
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-4 mb-24">
               <div>
                 <Link href="/editor" >
                   <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium py-3 px-6 rounded-md hover:shadow-lg transition-all mb-2">
@@ -31,6 +38,11 @@ export default function HomePage() {
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">No signup required • Works in browser</p>
               </div>
             </div>
+            <GlassEditor 
+                code={exampleCode} 
+                language="Readme.md" 
+                typingSpeed={30}
+              />
           </section>
 
           {/* Features */}
