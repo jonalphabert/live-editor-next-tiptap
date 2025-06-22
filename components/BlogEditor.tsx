@@ -59,7 +59,7 @@ const TiptapEditor = ({
             HTMLAttributes: { class: "heading-blog" },
         },
         paragraph: {
-            HTMLAttributes: { class: "mb-2 font-lato text-lg flex gap-2 items-center justify-start" },
+            HTMLAttributes: { class: "mb-2 font-lato text-lg" },
         },
         bulletList: {
             HTMLAttributes: { class: "list-disc font-lato ms-6" },

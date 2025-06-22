@@ -50,7 +50,7 @@ export const headingExtensions = levels.map(level =>
           default: level,
         },
         class: {
-          default: "heading-blog flex gap-2 items-center justify-start",
+          default: "heading-blog",
         },
       };
     },
