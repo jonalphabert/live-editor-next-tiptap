@@ -17,7 +17,7 @@ const GlassEditor: React.FC<GlassEditorProps> = ({
   code,
   language = 'markdown',
   typingSpeed = 30,
-  showLineNumbers = true,
+  showLineNumbers = false,
 }) => {
   const [displayedCode, setDisplayedCode] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -194,7 +194,7 @@ const GlassEditor: React.FC<GlassEditorProps> = ({
   };
 
   return (
-    <div className="rounded-xl overflow-hidden w-full">
+    <div className="rounded-xl overflow-hidden w-full max-w-6xl mx-auto text-left">
       <div className="p-4 bg-gray-100/30 dark:bg-gray-900/20">
         <div className="flex items-center gap-2 mb-3">
           <div className="flex gap-2">
@@ -214,7 +214,7 @@ const GlassEditor: React.FC<GlassEditorProps> = ({
         
         <div 
           ref={editorRef}
-          className="border rounded-lg font-mono text-sm overflow-auto max-h-96
+          className="border rounded-lg font-mono text-sm overflow-auto min-h-128
                     bg-white/60 backdrop-blur-md border-gray-300/70
                     dark:bg-gray-800/30 dark:backdrop-blur-md dark:border-gray-700/50"
         >
@@ -236,7 +236,9 @@ const GlassEditor: React.FC<GlassEditorProps> = ({
               >
                 {displayedCode}
               </ReactMarkdown>
-              {isAnimating && <span className="ml-1 animate-pulse">|</span>}
+              {displayedCode === '' && (
+              <span className="animate-pulse cursor">|</span>
+            )}
             </div>
           </div>
         </div>

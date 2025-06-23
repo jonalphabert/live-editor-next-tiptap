@@ -11,6 +11,18 @@ export default function HomePage() {
 This is a **sample** code block. You can write **Markdown** here.
 
 This editor **formats markdown in real-time** as you type! Here are some features:
+
+## Text Formatting
+- *Italic text* with single asterisks
+- **Bold text** with double asterisks
+- ~~Strikethrough~~ with double tildes
+- \`Inline code\` with backticks
+
+## Lists
+1. Ordered list item
+2. Another ordered item
+   - Nested unordered item
+   - Another nested item
 `;
 
   return (
@@ -25,8 +37,8 @@ This editor **formats markdown in real-time** as you type! Here are some feature
             <h2 className="text-4xl font-bold mb-8">
               Craft Perfect GitHub Content with Real-Time Preview
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-            A lightning-fast editor that understands GitHub's markdown flavor. Write documentation, profile bios, and project READMEs with confidence—seeing exactly how they'll appear on GitHub as you type. No more guesswork, just polished content.
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-6xl mx-auto">
+              A lightning-fast editor that understands GitHub's markdown flavor. Write documentation, profile bios, and project READMEs with confidence—seeing exactly how they'll appear on GitHub as you type. No more guesswork, just polished content.
             </p>
             <div className="flex justify-center gap-4 mb-24">
               <div>
@@ -41,7 +53,7 @@ This editor **formats markdown in real-time** as you type! Here are some feature
             <GlassEditor 
                 code={exampleCode} 
                 language="Readme.md" 
-                typingSpeed={30}
+                typingSpeed={70}
               />
           </section>
 
@@ -97,12 +109,15 @@ This editor **formats markdown in real-time** as you type! Here are some feature
           <section className="text-center mb-16">
             <h3 className="text-2xl font-bold mb-4">Live Demo</h3>
             <p className="mb-4 text-gray-600 dark:text-gray-300">See the editor in action</p>
-            <a
-              href="/editor"
-              className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700"
-            >
-              Open Editor
-            </a>
+            <div className="flex justify-center gap-4 mb-24">
+              <div>
+                <Link href="/editor" >
+                  <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium py-3 px-6 rounded-md hover:shadow-lg transition-all mb-2">
+                    Open Editor Now
+                  </div>
+                </Link>
+              </div>
+            </div>
           </section>
 
           {/* Footer */}

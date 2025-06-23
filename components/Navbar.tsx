@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="container mx-auto bg-gray-100 dark:bg-gray-800/70 backdrop-blur-md rounded-md shadow-md px-4 sm:px-12 py-4 flex justify-between items-center mb-12 top-12 sticky">
+    <nav className="container mx-auto bg-gray-100 dark:bg-gray-800/70 backdrop-blur-md rounded-md shadow-md px-4 sm:px-12 py-4 flex justify-between items-center mb-12 top-12 sticky z-[99999]">
       {/* Logo */}
       <h1 className="text-2xl font-bold">OpenEditor</h1>
       
