@@ -1,4 +1,5 @@
 import { DraftStatus } from '@/models/DraftStatus';
+import TurndownService from 'turndown';
 import { create } from 'zustand';
 
 type BlogCreateState = {
@@ -20,6 +21,7 @@ type BlogCreateState = {
   resetForm: () => void;
   submitForm: () => Promise<void>;
   draftPost: () => Promise<DraftStatus>;
+  saveAsMarkdown: () => void;
 };
 
 export const useModalStore = create<BlogCreateState>((set: Function, get: Function) => ({
@@ -90,6 +92,38 @@ export const useModalStore = create<BlogCreateState>((set: Function, get: Functi
     return {
       success: true,
       message: 'Success'
+    }
+  },
+  saveAsMarkdown: () => {
+    const { content } = get();
+    const turndownService = new TurndownService();
+    
+    // Add custom rules for better formatting (optional)
+    turndownService.addRule('preformatted', {
+      filter: ['pre'],
+      replacement: (content) => `\`\`\`\n${content}\n\`\`\``
+    });
+    
+    try {
+      const markdown = turndownService.turndown(content);
+      
+      // Create download
+      const blob = new Blob([markdown], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Readme.md';
+      document.body.appendChild(a);
+      a.click();
+      
+      // Cleanup
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
+    } catch (error) {
+      console.error('Conversion failed:', error);
+      alert('Error converting content to Markdown');
     }
   }
 }));
