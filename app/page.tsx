@@ -38,7 +38,7 @@ This editor **formats markdown in real-time** as you type! Here are some feature
               Craft Perfect GitHub Content with Real-Time Preview
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-6xl mx-auto">
-              A lightning-fast editor that understands GitHub's markdown flavor. Write documentation, profile bios, and project READMEs with confidence—seeing exactly how they'll appear on GitHub as you type. No more guesswork, just polished content.
+              A lightning-fast editor that understands GitHub&apos;s markdown flavor. Write documentation, profile bios, and project READMEs with confidence—seeing exactly how they&apos;ll appear on GitHub as you type. No more guesswork, just polished content.
             </p>
             <div className="flex justify-center gap-4 mb-24">
               <div>

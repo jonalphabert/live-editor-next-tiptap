@@ -8,7 +8,7 @@ import { useModalStore } from "@/store/BlogCreate";
 import { 
   Bold, CodeXml, Heading1, Heading2, Heading3, Heading4, Heading5, 
   ImageUp, Italic, LucideList, LucideListOrdered, LucideUnderline, 
-  LucideLink, Link as LinkIcon // Added LinkIcon for clarity
+  LucideLink
 } from "lucide-react";
 import {underlineConfiguration,
   imageConfiguration,

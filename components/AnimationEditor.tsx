@@ -129,7 +129,7 @@ const GlassEditor: React.FC<GlassEditorProps> = ({
 
   // Custom renderers for Markdown
   const renderers = {
-    code({ node, inline, className, children, ...props }: any) {
+    code({ _, inline, className, children, ...props }: any) {
       const match = /language-(\w+)/.exec(className || '');
       return !inline && match ? (
         <SyntaxHighlighter
@@ -194,7 +194,7 @@ const GlassEditor: React.FC<GlassEditorProps> = ({
   };
 
   return (
-    <div className="rounded-xl overflow-hidden w-full max-w-6xl mx-auto text-left">
+    <div className="rounded-xl overflow-hidden w-full max-w-4xl mx-auto text-left">
       <div className="p-4 bg-gray-100/30 dark:bg-gray-900/20">
         <div className="flex items-center gap-2 mb-3">
           <div className="flex gap-2">
@@ -214,7 +214,7 @@ const GlassEditor: React.FC<GlassEditorProps> = ({
         
         <div 
           ref={editorRef}
-          className="border rounded-lg font-mono text-sm overflow-auto min-h-128
+          className="border rounded-lg font-mono text-sm overflow-auto max-h-96
                     bg-white/60 backdrop-blur-md border-gray-300/70
                     dark:bg-gray-800/30 dark:backdrop-blur-md dark:border-gray-700/50"
         >
@@ -236,9 +236,7 @@ const GlassEditor: React.FC<GlassEditorProps> = ({
               >
                 {displayedCode}
               </ReactMarkdown>
-              {displayedCode === '' && (
-              <span className="animate-pulse cursor">|</span>
-            )}
+              <span className="ml-1 animate-pulse animation-duration-300">|</span>
             </div>
           </div>
         </div>
