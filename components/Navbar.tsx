@@ -5,7 +5,7 @@ import ThemeToggle from "./theme/ThemeButton";
 import { useState } from "react";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { LucideGithub, Menu, X } from "lucide-react";
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,15 @@ export const Navbar: React.FC = () => {
       <div className="hidden md:flex gap-8 items-center justify-center">
         <NavLink href="/">Home</NavLink>
         <NavLink href="/editor">Editor</NavLink>
-        <NavLink href="/about">About</NavLink>
+        {/* <NavLink href="/about">About</NavLink> */}
+        <NavLink href="https://github.com/jonalphabert/live-editor-next-tiptap">
+        <Button
+          className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-300"
+          aria-label={'Go to github repo'}
+        >
+          <LucideGithub /> See Project on Github
+          </Button>
+        </NavLink>
         <ThemeToggle />
       </div>
       
@@ -48,9 +56,9 @@ export const Navbar: React.FC = () => {
                 <SheetClose asChild>
                   <NavLinkMobile href="/editor">Editor</NavLinkMobile>
                 </SheetClose>
-                <SheetClose asChild>
+                {/* <SheetClose asChild>
                   <NavLinkMobile href="/about">About</NavLinkMobile>
-                </SheetClose>
+                </SheetClose> */}
               </div>
               
               <div className="mt-auto pb-8">

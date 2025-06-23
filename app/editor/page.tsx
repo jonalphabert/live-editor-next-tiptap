@@ -1,4 +1,5 @@
 import BlogEditor from "@/components/BlogEditor";
+import ThemeToggle from "@/components/theme/ThemeButton";
 import { Button } from "@/components/ui/button";
 import { Save } from "lucide-react";
 
@@ -8,7 +9,8 @@ export default function Home() {
       <div className="flex items-center justify-between  mb-8">
         <h1 className="text-2xl font-bold">OpenEditor</h1>
         <div className="flex gap-2">
-        <Button> <Save /> Save</Button>
+          <ThemeToggle />
+          <Button> <Save /> Save</Button>
         </div>
       </div>
       <BlogEditor></BlogEditor>
