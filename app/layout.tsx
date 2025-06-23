@@ -8,7 +8,7 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Outfit({
+const outfitSans = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
 });
@@ -26,10 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-gray-900 dark:text-white bg-white text-gray-900`}
+        className={`${geistSans.variable} ${outfitSans.variable} antialiased dark:bg-gray-950 dark:text-white bg-white text-gray-900 relative font-outfit`}
       >
        <ThemeProvider>
-          {/* Your layout structure */}
           {children}
         </ThemeProvider>
       </body>
