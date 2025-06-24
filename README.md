@@ -11,6 +11,8 @@ The project is built with the following tech stack:
 
 The project is designed to be highly customizable, so you can easily make it fit your needs. You can change the theme, add or remove features, and more.
 
+![NEXT JS](https://img.shields.io/badge/NEXT%20JS-000000?style=for-the-badge&logo=nextdotjs&logoColor=fff9f9) [![Tiptap Editor](https://img.shields.io/badge/Tiptap%20Editor-363636?style=for-the-badge&logo=&logoColor=ffffff)](https://tiptap.dev/) ![tailwind](https://img.shields.io/badge/tailwind-005bff?style=for-the-badge&logo=tailwindcss&logoColor=83bcfb) [![shadcn ui](https://img.shields.io/badge/shadcn%20ui-100f0f?style=for-the-badge&logo=shadcnui&logoColor=ffffff)](https://ui.shadcn.com/)
+
 ## Getting Started
 
 To get started with the project, follow these steps:
