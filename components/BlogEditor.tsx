@@ -13,9 +13,12 @@ import {
 import {underlineConfiguration,
   imageConfiguration,
   codeBlockConfiguration,
-  headingExtensions } from "@/utils/editor-setup";
+  headingExtensions, 
+  linkConfiguration} from "@/utils/editor-setup";
 import Highlight from "@tiptap/extension-highlight";
+import { ShieldsImageExtension } from "@/lib/tiptap/extensions/shield-image";
 
+import { ShieldsModal } from '@/components/ShieldsModal';
 
 type TiptapProps = {
   className?: string;
@@ -88,6 +91,8 @@ const TiptapEditor = ({
       imageConfiguration,
       codeBlockConfiguration,
       ...headingExtensions,
+      linkConfiguration,
+      ShieldsImageExtension,
     ],
     content,
     onUpdate: ({ editor }) => {
@@ -212,6 +217,17 @@ const TiptapEditor = ({
         .run();
     }
   }, [editor]);
+
+  const handleInsertShieldsImage = (data: {
+    label: string;
+    logo: string;
+    logoColor: string;
+    href: string;
+  }) => {
+    if (editor) {
+      editor.commands.insertShieldsImage(data);
+    }
+  };
 
   if (!editor) {
     return <div className="text-gray-500 p-4">Loading editor...</div>;
@@ -401,6 +417,8 @@ const TiptapEditor = ({
             <ImageUp />
           )}
         </button>
+
+        <ShieldsModal onInsert={handleInsertShieldsImage } />
       </div>
 
       {editor && (
