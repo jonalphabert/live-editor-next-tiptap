@@ -28,7 +28,7 @@ export const imageConfiguration = Image.configure({
     inline: true,
     allowBase64: false,
     HTMLAttributes: {
-        class: "my-4",
+        class: "mx-0.5 my-0.5 inline-block",
     },
 })
 
@@ -116,4 +116,7 @@ export const linkConfiguration = Link.configure({
       return false
     }
   },
+  HTMLAttributes:{
+    class: 'inline-block'
+  }
 })

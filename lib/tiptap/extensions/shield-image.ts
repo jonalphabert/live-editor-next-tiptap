@@ -27,7 +27,7 @@ export const ShieldsImageExtension = Extension.create({
   addCommands() {
     return {
       insertShieldsImage: (options: ShieldsImageOptions) => 
-        ({ commands }: CommandProps) => {
+        ({ commands, chain }: CommandProps) => {
           const { label, logo, logoColor, href, style, styleColor } = options;
         
         // Construct Shields.io URL with all options
@@ -39,12 +39,19 @@ export const ShieldsImageExtension = Extension.create({
         console.log(url.toString());
         
         // Create image with optional link
-        const img = `<img src="${url.toString()}" alt="${label}" />`;
+        const img = `<img src="${url.toString()}" alt="${label}" style="display: inline-block; margin: 0 2px;" />`;
         const content = href 
-          ? `<a href="${href}" target="_blank">${img}</a>` 
+          ? `<a href="${href}" target="_blank" style="display: inline-block;">${img}</a>` 
           : img;
 
-        return commands.insertContent(content);
+          return chain()
+          .insertContent(content, {
+            parseOptions: {
+              preserveWhitespace: 'full',
+            }
+          })
+          .createParagraphNear()
+          .run();
       }
     };
   }

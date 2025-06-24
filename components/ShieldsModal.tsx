@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Shield } from 'lucide-react';
 
 interface ShieldsModalProps {
   onInsert: (data: {
@@ -58,11 +59,19 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        {/* <Button className='p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
-        </Button>
+          Add Tech Badge
+        </Button> */}
+        <button
+          className={`p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center gap-2`}
+          title="Heading 4"
+        >
+          <Shield className="w-4 h-4" />
+          Add Tech Badge
+        </button>
       </DialogTrigger>
       
       <DialogContent className="max-w-md">
