@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Welcome to Live Editor Next Tiptap!
+
+This project is a Next.js app that uses Tiptap to create a live, collaborative, and customizable editor experience. It's built with the latest web technologies and is designed to be fast, secure, and easy to use.
+
+The project is built with the following tech stack:
+
+* Next.js: A popular React framework for building server-rendered, statically generated, and performance-optimized websites and applications.
+* Tiptap: A rich text editor framework that provides a lot of features out of the box, such as collaborative editing, customizable toolbar, and more.
+* Tailwind CSS: A utility-first CSS framework that makes it easy to write and maintain UI components.
+* Lucide: A set of beautiful, consistent, and customizable icons that can be used in your app.
+
+The project is designed to be highly customizable, so you can easily make it fit your needs. You can change the theme, add or remove features, and more.
+
+![NEXT JS](https://img.shields.io/badge/NEXT%20JS-000000?style=for-the-badge&logo=nextdotjs&logoColor=fff9f9) [![Tiptap Editor](https://img.shields.io/badge/Tiptap%20Editor-363636?style=for-the-badge&logo=&logoColor=ffffff)](https://tiptap.dev/) ![tailwind](https://img.shields.io/badge/tailwind-005bff?style=for-the-badge&logo=tailwindcss&logoColor=83bcfb) [![shadcn ui](https://img.shields.io/badge/shadcn%20ui-100f0f?style=for-the-badge&logo=shadcnui&logoColor=ffffff)](https://ui.shadcn.com/)
 
 ## Getting Started
 
-First, run the development server:
+To get started with the project, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository: `git clone https://github.com/tiptap/live-editor-next-tiptap.git`
+2. Install the dependencies: `npm install` or `yarn install`
+3. Start the development server: `npm run dev` or `yarn dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start the development server and open the app in your default web browser. You can now start exploring the app and making changes to the code.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project comes with a lot of features out of the box, such as:
 
-## Learn More
+* Live collaboration: Multiple users can edit the same document at the same time.
+* Customizable toolbar: You can add or remove buttons from the toolbar to fit your needs.
+* Rich text editing: The app supports a wide range of formatting options, such as bold, italic, underline, and more.
+* Image upload: You can upload images to the app and they will be displayed inline.
+* Code block formatting: You can format code blocks with different languages and themes.
+* Emoji support: The app supports a wide range of emojis that can be used in the editor.
+* And more!
 
-To learn more about Next.js, take a look at the following resources:
+## Customization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The project is highly customizable, so you can easily make it fit your needs. You can change the theme, add or remove features, and more.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To customize the project, you can start by modifying the `tailwind.config.js` file to change the theme. You can also add or remove features by modifying the `components` folder.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! If you have an idea for a new feature or a bug fix, feel free to open a pull request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Before contributing, please make sure to read the [Contributing Guide](CONTRIBUTING.md).
+
+## License
+
+The project is licensed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+## Acknowledgments
+
+The project uses the following open source libraries:
+
+* Tiptap: A rich text editor framework that provides a lot of features out of the box.
+* Tailwind CSS: A utility-first CSS framework that makes it easy to write and maintain UI components.
+* Lucide: A set of beautiful, consistent, and customizable icons that can be used in your app.
+
+Thanks to the maintainers of these libraries for their hard work!
+
