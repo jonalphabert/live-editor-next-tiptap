@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { HexColorPicker } from 'react-colorful';
 import {
   Dialog,
   DialogContent,
@@ -9,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 interface ShieldsModalProps {
   onInsert: (data: {
@@ -16,34 +18,42 @@ interface ShieldsModalProps {
     logo: string;
     logoColor: string;
     href: string;
+    style: string;
+    styleColor: string;
   }) => void;
 }
 
 export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showStyleOptions, setShowStyleOptions] = useState(false);
   const [formData, setFormData] = useState({
     label: '',
     logo: '',
-    logoColor: 'white',
-    href: ''
+    logoColor: '#ffffff',
+    href: '',
+    style: 'flat',
+    styleColor: '#4D4D4D'
   });
 
   const handleInsert = () => {
-    onInsert({
-      label: formData.label,
-      logo: formData.logo,
-      logoColor: formData.logoColor,
-      href: formData.href
-    });
+    onInsert(formData);
     setIsOpen(false);
-    setFormData({ label: '', logo: '', logoColor: 'white', href: '' });
+    setFormData({ 
+      label: '', 
+      logo: '', 
+      logoColor: '#ffffff', 
+      href: '',
+      style: 'flat',
+      styleColor: '#4D4D4D'
+    });
+    setShowStyleOptions(false);
   };
 
   const previewUrl = `https://img.shields.io/badge/${
     encodeURIComponent(formData.label || 'label')
-  }-informational?logo=${formData.logo || 'logo'}&logoColor=${
-    formData.logoColor || 'white'
-  }`;
+  }-${formData.styleColor.replace('#', '')}?style=${formData.style}&logo=${
+    formData.logo || 'logo'
+  }&logoColor=${formData.logoColor.replace('#', '')}`;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -55,13 +65,12 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
         </Button>
       </DialogTrigger>
       
-      <DialogContent>
+      <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Add Tech Badge</DialogTitle>
         </DialogHeader>
         
         <div className="grid gap-4 py-4">
-          {/* Form fields remain the same as previous version */}
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="label" className="text-right">
               Label
@@ -91,12 +100,19 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
             <Label htmlFor="logoColor" className="text-right">
               Logo Color
             </Label>
-            <Input
-              id="logoColor"
-              value={formData.logoColor}
-              onChange={e => setFormData({...formData, logoColor: e.target.value})}
-              className="col-span-3"
-            />
+            <div className="flex gap-2 col-span-3 flex-col">
+              <HexColorPicker
+                color={formData.logoColor}
+                onChange={(color: string) => setFormData({...formData, logoColor: color})}
+                className="w-full h-32"
+              />
+              <Input
+                id="logoColor"
+                value={formData.logoColor}
+                onChange={e => setFormData({...formData, logoColor: e.target.value})}
+                className="w-full"
+              />
+            </div>
           </div>
           
           <div className="grid grid-cols-4 items-center gap-4">
@@ -112,6 +128,57 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
             />
           </div>
           
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="customStyle"
+              checked={showStyleOptions}
+              onChange={e => setShowStyleOptions(e.target.checked)}
+              className="h-4 w-4"
+            />
+            <Label htmlFor="customStyle">Customize badge style</Label>
+          </div>
+          
+          {showStyleOptions && (
+            <>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="style" className="text-right">
+                  Badge Style
+                </Label>
+                <Select defaultValue={formData.style} onValueChange={value => setFormData({...formData, style: value})}>
+                  <SelectTrigger className="w-full col-span-3">
+                    <SelectValue placeholder="Theme" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="flat">Flat</SelectItem>
+                    <SelectItem value="plastic">Plastic</SelectItem>
+                    <SelectItem value="flat-square">Flat Square</SelectItem>
+                    <SelectItem value="for-the-badge">For The Badge</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="styleColor" className="text-right">
+                  Style Color
+                </Label>
+                <div className="col-span-3 flex gap-2 flex-col">
+                  <HexColorPicker
+                    color={formData.styleColor}
+                    onChange={(color: string) => setFormData({...formData, styleColor: color})}
+                    className="w-full h-32"
+                  />
+                  <Input
+                    id="styleColor"
+                    value={formData.styleColor}
+                    onChange={e => setFormData({...formData, styleColor: e.target.value})}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+            </>
+          )}
+          
           <div className="mt-4">
             <Label>Preview:</Label>
             <img 
@@ -122,8 +189,9 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
           </div>
         </div>
         
-        <div className="flex justify-end">
-          <Button onClick={handleInsert}>Insert Image</Button>
+        <div className="flex justify-end gap-2">
+          <Button variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
+          <Button onClick={(handleInsert)}>Insert Image</Button>
         </div>
       </DialogContent>
     </Dialog>

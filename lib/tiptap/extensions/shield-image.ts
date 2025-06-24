@@ -5,7 +5,9 @@ interface ShieldsImageOptions {
   label: string;
   logo: string;
   logoColor: string;
-  href?: string;  // Optional link URL
+  href?: string; 
+  style: string;
+  styleColor: string; // Optional link URL
 }
 
 declare module '@tiptap/core' {
@@ -26,20 +28,21 @@ export const ShieldsImageExtension = Extension.create({
     return {
       insertShieldsImage: (options: ShieldsImageOptions) => 
         ({ commands }: CommandProps) => {
-        const { label, logo, logoColor, href } = options;
-        console.log(label, logo, logoColor, href);
+          const { label, logo, logoColor, href, style, styleColor } = options;
         
-        // Construct Shields.io URL
-        const url = new URL(`https://img.shields.io/badge/${encodeURIComponent(label)}-informational`);
+        // Construct Shields.io URL with all options
+        const url = new URL(`https://img.shields.io/badge/${encodeURIComponent(label)}-${styleColor.replace('#', '')}`);
+        url.searchParams.set('style', style);
         url.searchParams.set('logo', logo);
-        url.searchParams.set('logoColor', logoColor);
+        url.searchParams.set('logoColor', logoColor.replace('#', ''));
+
+        console.log(url.toString());
         
         // Create image with optional link
         const img = `<img src="${url.toString()}" alt="${label}" />`;
         const content = href 
-          ? `<a href="${href}" target="_blank" rel="noopener noreferrer">${img}</a>` 
+          ? `<a href="${href}" target="_blank">${img}</a>` 
           : img;
-        
 
         return commands.insertContent(content);
       }

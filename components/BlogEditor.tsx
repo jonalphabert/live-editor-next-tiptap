@@ -223,6 +223,8 @@ const TiptapEditor = ({
     logo: string;
     logoColor: string;
     href: string;
+    style: string;
+    styleColor: string;
   }) => {
     if (editor) {
       editor.commands.insertShieldsImage(data);
