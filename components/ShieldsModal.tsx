@@ -12,12 +12,13 @@ import {
 } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Shield } from 'lucide-react';
+import { LogoCombobox } from './LogoCombobox';
+import { LogoOption } from '@/types/LogoType';
 
 interface ShieldsModalProps {
   onInsert: (data: {
     label: string;
     logo: string;
-    logoColor: string;
     href: string;
     style: string;
     styleColor: string;
@@ -30,11 +31,16 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
   const [formData, setFormData] = useState({
     label: '',
     logo: '',
-    logoColor: '#ffffff',
     href: '',
     style: 'flat',
     styleColor: '#4D4D4D'
   });
+  const [selectedLogo, setSelectedLogo] = useState<LogoOption | null>(null);
+
+  const handleLogoChange = (logo: LogoOption) => {
+    setFormData({ ...formData, logo: logo.logo_slug, label: logo.logo_name });
+    setSelectedLogo(logo)
+  }
 
   const handleInsert = () => {
     onInsert(formData);
@@ -42,7 +48,6 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
     setFormData({ 
       label: '', 
       logo: '', 
-      logoColor: '#ffffff', 
       href: '',
       style: 'flat',
       styleColor: '#4D4D4D'
@@ -54,7 +59,7 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
     encodeURIComponent(formData.label || 'label')
   }-${formData.styleColor.replace('#', '')}?style=${formData.style}&logo=${
     formData.logo || 'logo'
-  }&logoColor=${formData.logoColor.replace('#', '')}`;
+  }`;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -81,6 +86,15 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
         
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="logo" className="text-right">
+              Logo
+            </Label>
+            <div className='w-full col-span-3'>
+              <LogoCombobox value={selectedLogo} onChange={handleLogoChange} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="label" className="text-right">
               Label
             </Label>
@@ -90,38 +104,6 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
               onChange={e => setFormData({...formData, label: e.target.value})}
               className="col-span-3"
             />
-          </div>
-          
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="logo" className="text-right">
-              Logo
-            </Label>
-            <Input
-              id="logo"
-              value={formData.logo}
-              onChange={e => setFormData({...formData, logo: e.target.value})}
-              className="col-span-3"
-              placeholder="npm, docker, python, etc."
-            />
-          </div>
-          
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="logoColor" className="text-right">
-              Logo Color
-            </Label>
-            <div className="flex gap-2 col-span-3 flex-col">
-              <HexColorPicker
-                color={formData.logoColor}
-                onChange={(color: string) => setFormData({...formData, logoColor: color})}
-                className="w-full h-32"
-              />
-              <Input
-                id="logoColor"
-                value={formData.logoColor}
-                onChange={e => setFormData({...formData, logoColor: e.target.value})}
-                className="w-full"
-              />
-            </div>
           </div>
           
           <div className="grid grid-cols-4 items-center gap-4">
@@ -137,56 +119,43 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
             />
           </div>
           
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="customStyle"
-              checked={showStyleOptions}
-              onChange={e => setShowStyleOptions(e.target.checked)}
-              className="h-4 w-4"
-            />
-            <Label htmlFor="customStyle">Customize badge style</Label>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="style" className="text-right">
+              Badge Style
+            </Label>
+            <Select defaultValue={formData.style} onValueChange={value => setFormData({...formData, style: value})}>
+              <SelectTrigger className="w-full col-span-3">
+                <SelectValue placeholder="Theme" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="flat">Flat</SelectItem>
+                <SelectItem value="plastic">Plastic</SelectItem>
+                <SelectItem value="flat-square">Flat Square</SelectItem>
+                <SelectItem value="for-the-badge">For The Badge</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           
-          {showStyleOptions && (
-            <>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="style" className="text-right">
-                  Badge Style
-                </Label>
-                <Select defaultValue={formData.style} onValueChange={value => setFormData({...formData, style: value})}>
-                  <SelectTrigger className="w-full col-span-3">
-                    <SelectValue placeholder="Theme" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="flat">Flat</SelectItem>
-                    <SelectItem value="plastic">Plastic</SelectItem>
-                    <SelectItem value="flat-square">Flat Square</SelectItem>
-                    <SelectItem value="for-the-badge">For The Badge</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="styleColor" className="text-right">
-                  Style Color
-                </Label>
-                <div className="col-span-3 flex gap-2 flex-col">
-                  <HexColorPicker
-                    color={formData.styleColor}
-                    onChange={(color: string) => setFormData({...formData, styleColor: color})}
-                    className="w-full h-32"
-                  />
-                  <Input
-                    id="styleColor"
-                    value={formData.styleColor}
-                    onChange={e => setFormData({...formData, styleColor: e.target.value})}
-                    className="w-full"
-                  />
-                </div>
-              </div>
-            </>
-          )}
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="styleColor" className="text-right">
+              Style Color
+            </Label>
+            <div className="col-span-3 flex gap-2 flex-col">
+              <HexColorPicker
+                color={formData.styleColor}
+                onChange={(color: string) => setFormData({...formData, styleColor: color})}
+                className="w-full h-32"
+              />
+              <Input
+                id="styleColor"
+                value={formData.styleColor}
+                onChange={e => setFormData({...formData, styleColor: e.target.value})}
+                className="w-full"
+              />
+            </div>
+          </div>
+            
+          
           
           <div className="mt-4">
             <Label>Preview:</Label>
