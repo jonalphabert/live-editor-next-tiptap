@@ -221,7 +221,6 @@ const TiptapEditor = ({
   const handleInsertShieldsImage = (data: {
     label: string;
     logo: string;
-    logoColor: string;
     href: string;
     style: string;
     styleColor: string;

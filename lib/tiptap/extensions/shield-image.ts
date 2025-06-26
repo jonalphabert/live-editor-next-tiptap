@@ -4,7 +4,6 @@ import { Extension, type CommandProps } from '@tiptap/core';
 interface ShieldsImageOptions {
   label: string;
   logo: string;
-  logoColor: string;
   href?: string; 
   style: string;
   styleColor: string; // Optional link URL
@@ -28,13 +27,12 @@ export const ShieldsImageExtension = Extension.create({
     return {
       insertShieldsImage: (options: ShieldsImageOptions) => 
         ({ commands, chain }: CommandProps) => {
-          const { label, logo, logoColor, href, style, styleColor } = options;
+          const { label, logo, href, style, styleColor } = options;
         
         // Construct Shields.io URL with all options
         const url = new URL(`https://img.shields.io/badge/${encodeURIComponent(label)}-${styleColor.replace('#', '')}`);
         url.searchParams.set('style', style);
         url.searchParams.set('logo', logo);
-        url.searchParams.set('logoColor', logoColor.replace('#', ''));
 
         console.log(url.toString());
         
