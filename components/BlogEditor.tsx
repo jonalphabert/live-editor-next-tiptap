@@ -17,8 +17,10 @@ import {underlineConfiguration,
   linkConfiguration} from "@/utils/editor-setup";
 import Highlight from "@tiptap/extension-highlight";
 import { ShieldsImageExtension } from "@/lib/tiptap/extensions/shield-image";
+import { GitHubStatsExtension } from "@/lib/tiptap/extensions/github-stat";
 
 import { ShieldsModal } from '@/components/ShieldsModal';
+import GithubStatModal from "./GithubStatModal";
 
 type TiptapProps = {
   className?: string;
@@ -93,6 +95,7 @@ const TiptapEditor = ({
       ...headingExtensions,
       linkConfiguration,
       ShieldsImageExtension,
+      GitHubStatsExtension
     ],
     content,
     onUpdate: ({ editor }) => {
@@ -228,6 +231,10 @@ const TiptapEditor = ({
     if (editor) {
       editor.commands.insertShieldsImage(data);
     }
+  };
+
+  const handleInsertStats = (username: string, theme: string) => {
+    editor?.commands.insertGitHubStats({ username, theme });
   };
 
   if (!editor) {
@@ -420,6 +427,8 @@ const TiptapEditor = ({
         </button>
 
         <ShieldsModal onInsert={handleInsertShieldsImage } />
+
+        <GithubStatModal onInsert={handleInsertStats } />
       </div>
 
       {editor && (
