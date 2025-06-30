@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ node }: { node: { attrs: any } }) => {
+export default function GithubStatsComponent({ node }: { node: { attrs: any } }){
   const { username, theme } = node.attrs;
   
   return (
