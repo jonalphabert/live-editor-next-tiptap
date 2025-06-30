@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Shield } from 'lucide-react';
 import { LogoCombobox } from './LogoCombobox';
 import { LogoOption } from '@/types/LogoType';
+import Link from 'next/link';
 
 interface ShieldsModalProps {
   onInsert: (data: {
@@ -167,9 +168,14 @@ export const ShieldsModal = ({ onInsert }: ShieldsModalProps) => {
           </div>
         </div>
         
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-2 mb-6">
           <Button variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
           <Button onClick={(handleInsert)}>Insert Image</Button>
+        </div>
+
+        <div className='text-center text-xs'>
+          Powered by 
+          <Link href="https://shields.io/" target="_blank" rel="noopener noreferrer" className='font-bold'> shields.io</Link> 
         </div>
       </DialogContent>
     </Dialog>

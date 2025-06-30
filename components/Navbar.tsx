@@ -47,7 +47,7 @@ export const Navbar: React.FC = () => {
             </Button>
           </SheetTrigger>
           
-          <SheetContent side="right" className="w-[300px] sm:w-[350px] bg-white dark:bg-gray-800">
+          <SheetContent side="right" className="w-[300px] sm:w-[350px] bg-white dark:bg-gray-800 z-[9999999999999999]">
             <div className="flex flex-col h-full pt-10">
               <div className="flex flex-col gap-6">
                 <SheetClose asChild>
